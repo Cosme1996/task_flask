@@ -18,7 +18,7 @@ def create_task():
     print(tasks)
     tasks.append(new_task)
 
-    return jsonify({"mensagem" : "Nova tarefa criada com sucesso "})
+    return jsonify({"message" : "Nova tarefa criada com sucesso", "id": new_task.id})
 
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
@@ -36,7 +36,7 @@ def get_task(id):
         if t.id == id:
             return jsonify(t.to_dict())
 
-    return jsonify({"mensagem" : "Não foi possível encontrar a atividade"}), 404
+    return jsonify({"message" : "Não foi possível encontrar a atividade"}), 404
 
 @app.route('/tasks/<int:id>', methods=["PUT"])
 def update_task(id):
@@ -46,14 +46,14 @@ def update_task(id):
             task = t
     print(task)
     if task == None:
-        return jsonify({'mensagem': 'Não foi possível encontrar a ativide'}), 404        
+        return jsonify({'message': 'Não foi possível encontrar a ativide'}), 404        
 
     data = request.get_json()
     task.title = data['title']
     task.description = data['description']
     task.completed = data['completed']
     print(task)
-    return jsonify({'mensagem' : 'Tarefa atualizada com sucesso'})
+    return jsonify({'message' : 'Tarefa atualizada com sucesso'})
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
 def delete_taske(id):
@@ -64,10 +64,10 @@ def delete_taske(id):
             break
         
     if not task:        
-        return jsonify({'mansegam' :'Não foi possível encontrar a ativide'}), 404
+        return jsonify({'message' :'Não foi possível encontrar a ativide'}), 404
     
     tasks.remove(task)
-    return jsonify({'mensagem' : 'Tarefa deletada com sucesso'})
+    return jsonify({'message' : 'Tarefa deletada com sucesso'})
     
 if __name__ == "__main__":
  app.run(debug=True)
